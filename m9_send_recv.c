@@ -2,7 +2,6 @@
 #include <mpi.h>
 #include <stdlib.h>
 int main(){
-	//Declare variables
 	int size,rank,info,recv,err0,err1;
 	double start,end;
 	MPI_Status stat;
@@ -31,7 +30,7 @@ int main(){
 
 	//Non-blocking case begins
 	start = MPI_Wtime();
-	MPI_Isend(&info,1,MPI_INT,(rank+1)%size,     0,MPI_COMM_WORLD,&sendreq);
+	MPI_Isend(&info,1,MPI_INT,(rank+1)%size,0,MPI_COMM_WORLD,&sendreq);
 	MPI_Irecv(&recv,1,MPI_INT,(rank+size-1)%size,0,MPI_COMM_WORLD,&recvreq);
 	if(MPI_Wait(&sendreq,&stat)){
 		printf("Send failure!\n");
@@ -44,7 +43,5 @@ int main(){
 	if(rank==0){
 		printf("Non-blocking Comm costs %lf seconds.\n",end);
 	}
-
-	//Finalize the program
 	MPI_Finalize();
 }
